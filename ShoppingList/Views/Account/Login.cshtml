@@ -1,8 +1,8 @@
 ﻿@model LoginViewModel
  
 
-
-<form asp-controller="AccountController" asp-action="Login" method="post">
+<div>
+<form asp-controller="Account" asp-action="Login" method="post">
     <div class="form-group">
         <label for="Email">Email:</label>
         <input asp-for="Email" maxlength="50"/>
@@ -15,8 +15,10 @@
     </div>
     <button>Login</button>
 </form>
-
-
+</div>
+<div>
+<a asp-action="Register">Kayıt ol</a>
+</div>
 @section Scripts{
     <partial name="_ValidationScriptsPartial"/>
 }
