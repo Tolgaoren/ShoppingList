@@ -15,5 +15,7 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
+    public string Role { get; set; } = null!;
+
     public virtual ICollection<ShoppingList> ShoppingLists { get; set; } = new List<ShoppingList>();
 }

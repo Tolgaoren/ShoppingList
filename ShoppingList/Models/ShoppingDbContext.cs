@@ -15,8 +15,6 @@ public partial class ShoppingDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Admin> Admins { get; set; }
-
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Item> Items { get; set; }
@@ -33,19 +31,6 @@ public partial class ShoppingDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Admin>(entity =>
-        {
-            entity.HasKey(e => e.AdminId).HasName("PK__Admins__719FE4E89C2DFD44");
-
-            entity.HasIndex(e => e.Email, "UQ__Admins__A9D10534BC185183").IsUnique();
-
-            entity.Property(e => e.AdminId).HasColumnName("AdminID");
-            entity.Property(e => e.Email).HasMaxLength(50);
-            entity.Property(e => e.FirstName).HasMaxLength(50);
-            entity.Property(e => e.LastName).HasMaxLength(50);
-            entity.Property(e => e.Password).HasMaxLength(50);
-        });
-
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B3FE3E6B5");
