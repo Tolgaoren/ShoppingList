@@ -8,10 +8,10 @@ namespace ShoppingList.Validators
         public LoginValidator() 
         {
             RuleFor(a => a.Email)
-                    .NotEmpty()
-                    .WithMessage("Email alanı boş bırakılamaz.")
-                    .EmailAddress()
-                    .WithMessage("Geçerli bir email adresi giriniz.");
+                .NotEmpty()
+                .WithMessage("Email alanı boş bırakılamaz.")
+                .EmailAddress()
+                .WithMessage("Geçerli bir email adresi giriniz.");
 
             RuleFor(a => a.Password)
                 .NotEmpty()
