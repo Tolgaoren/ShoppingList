@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShoppingList.Models;
-using ShoppingList.ViewModels;
+using Shopping.Models;
+using Shopping.ViewModels;
 
-namespace ShoppingList.Controllers
+namespace Shopping.Controllers
 {
     [Authorize]
     public class ListController : Controller
@@ -19,8 +19,8 @@ namespace ShoppingList.Controllers
             // List Items
             var resultList = dbContext.ListItems.Where(a => a.ListId == ListId).ToList();
             List<ListItems> Items = new List<ListItems>();
-            if (resultList != null) 
-            { 
+            if (resultList != null)
+            {
                 foreach (var item in resultList)
                 {
                     ListItems listItems = new ListItems()
@@ -54,11 +54,11 @@ namespace ShoppingList.Controllers
             // All Categories
             var resultCategories = dbContext.Categories.ToList();
             List<Categories> allCategories = new List<Categories>();
-            if (resultCategories != null) 
+            if (resultCategories != null)
             {
-                foreach(var category in resultCategories)
+                foreach (var category in resultCategories)
                 {
-                    Categories c = new Categories() 
+                    Categories c = new Categories()
                     {
                         CategoryId = category.CategoryId,
                         CategoryName = category.CategoryName
@@ -78,14 +78,18 @@ namespace ShoppingList.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveList(List<string> itemList)
+        public IActionResult SaveList(List<string> itemList, List<Items> allItems)
         {
+            if (itemList != null || allItems != null)
+            {
+                ShoppingList shoppingList = new ShoppingList() { };
 
-            
+            }
+
             return View();
         }
 
-        public IActionResult GoShopping(int ListId) 
+        public IActionResult GoShopping(int ListId)
         {
             return View();
         }

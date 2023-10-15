@@ -1,4 +1,4 @@
-﻿namespace ShoppingList.ViewModels
+﻿namespace Shopping.ViewModels
 {
     public class RegisterViewModel
     {

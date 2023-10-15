@@ -2,16 +2,15 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ShoppingList.Models;
-using ShoppingList.ViewModels;
-using ShoppingList.Security;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Security.Cryptography.Xml;
+using Shopping.ViewModels;
+using Shopping.Security;
+using Shopping.Models;
 
-
-namespace ShoppingList.Controllers
+namespace Shopping.Controllers
 {
     public class AccountController : Controller
     {
@@ -97,7 +96,7 @@ namespace ShoppingList.Controllers
             var locker = ActivatorUtilities.CreateInstance<Hash>(LockerKey);
             string salt = locker.HashCreate();
             string encryptKey = locker.HashCreate(password, salt);
-            
+
             return encryptKey;
         }
 

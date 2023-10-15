@@ -1,6 +1,6 @@
-﻿using ShoppingList.Models;
+﻿using Shopping.Models;
 
-namespace ShoppingList.ViewModels
+namespace Shopping.ViewModels
 {
     public class ListDetailsViewModel
     {

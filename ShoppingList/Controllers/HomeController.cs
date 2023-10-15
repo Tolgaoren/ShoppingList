@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShoppingList.Models;
-using ShoppingList.ViewModels;
+using Shopping.Models;
+using Shopping.ViewModels;
 using System.Diagnostics;
 using System.Security.Claims;
 
-namespace ShoppingList.Controllers
+namespace Shopping.Controllers
 {
     [Authorize]
     public class HomeController : Controller
@@ -23,8 +23,9 @@ namespace ShoppingList.Controllers
         {
             var userClaims = HttpContext.User.Claims;
             var user = userClaims.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
-            
-            if (user != null) {
+
+            if (user != null)
+            {
                 int userId = int.Parse(user);
                 var DbLists = dbContext.ShoppingLists.Where(u => u.UserId == userId);
                 if (DbLists != null)
@@ -63,11 +64,12 @@ namespace ShoppingList.Controllers
         }
 
         [HttpPost]
-        public IActionResult NewList(ShoppingLists newList) {
+        public IActionResult NewList(ShoppingLists newList)
+        {
 
             if (ModelState.IsValid)
             {
-                Models.ShoppingList shoppingList = new Models.ShoppingList()
+                ShoppingList shoppingList = new ShoppingList()
                 {
                     UserId = newList.UserId,
                     ListName = newList.ListName,
@@ -78,7 +80,7 @@ namespace ShoppingList.Controllers
             }
 
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
 

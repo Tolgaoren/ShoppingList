@@ -20,7 +20,6 @@
 <script>
     $(document).ready(function(){
         var itemList = [];
-        
         $("#addItem").click(function(){
             var selectedItem = $("#searchItem").val();
             itemList.push(selectedItem);
@@ -29,10 +28,15 @@
         });
 
         $("#save").click(function(){
+        var allItems = [];
+        @foreach (var i in Model.AllItems)
+        {
+            @:allItems.push({ "ItemId": @i.ItemId, "ItemName": "@i.ItemName" });
+        }
             $.ajax({
                 url: '/List/SaveList',
                 type: 'POST',
-                data: { 'itemList': itemList },
+                data: { 'itemList': itemList, 'allItems': allItems },
                 success: function(){
                     alert("Items saved successfully!");
                 }

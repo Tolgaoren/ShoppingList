@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using ShoppingList.ViewModels;
+using Shopping.ViewModels;
 
-namespace ShoppingList.Validators
+namespace Shopping.Validators
 {
     public class RegisterValidator : AbstractValidator<RegisterViewModel>
     {
-        public RegisterValidator() 
+        public RegisterValidator()
         {
             RuleFor(a => a.Email)
                 .NotEmpty()

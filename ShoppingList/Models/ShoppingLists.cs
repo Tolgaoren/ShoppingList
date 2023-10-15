@@ -1,4 +1,4 @@
-﻿namespace ShoppingList.Models
+﻿namespace Shopping.Models
 {
     public class ShoppingLists
     {

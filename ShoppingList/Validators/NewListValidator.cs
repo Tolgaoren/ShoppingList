@@ -1,11 +1,12 @@
 ﻿using FluentValidation;
-using ShoppingList.Models;
+using Shopping.Models;
 
-namespace ShoppingList.Validators
+namespace Shopping.Validators
 {
     public class NewListValidator : AbstractValidator<ShoppingLists>
     {
-        public NewListValidator() {
+        public NewListValidator()
+        {
             RuleFor(a => a.UserId)
                 .NotEmpty()
                 .WithMessage("Oluşturulamadı.");

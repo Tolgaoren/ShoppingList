@@ -1,15 +1,15 @@
-﻿namespace ShoppingList.Security
+﻿namespace Shopping.Security
 {
     public class Hash
     {
         public string HashCreate()
         {
             byte[] randomBytes = new byte[128 / 8];
-            using (var generator = System.Security.Cryptography.RandomNumberGenerator.Create()) 
+            using (var generator = System.Security.Cryptography.RandomNumberGenerator.Create())
             {
-            generator.GetBytes(randomBytes);
-            return Convert.ToBase64String(randomBytes);
-            }   
+                generator.GetBytes(randomBytes);
+                return Convert.ToBase64String(randomBytes);
+            }
         }
         public string HashCreate(string value, string salt)
         {
@@ -18,12 +18,12 @@
                 salt: System.Text.Encoding.UTF8.GetBytes(salt),
                 prf: Microsoft.AspNetCore.Cryptography.KeyDerivation.KeyDerivationPrf.HMACSHA512,
                 iterationCount: 10000,
-                numBytesRequested: 256/8);
+                numBytesRequested: 256 / 8);
             return Convert.ToBase64String(valueBytes) + "æ" + salt;
         }
 
         public bool ValidateHash(string value, string salt, string hash)
-            => HashCreate(value, salt).Split('æ')[0] == hash; 
+            => HashCreate(value, salt).Split('æ')[0] == hash;
     }
 
 }

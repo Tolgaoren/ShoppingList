@@ -1,6 +1,6 @@
-﻿namespace ShoppingList.ViewModels
+﻿namespace Shopping.ViewModels
 {
-    public class LoginViewModel 
+    public class LoginViewModel
     {
         public string Email { get; set; }
 

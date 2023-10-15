@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace ShoppingList.Models;
+namespace Shopping.Models;
 
 public partial class ShoppingDbContext : DbContext
 {
