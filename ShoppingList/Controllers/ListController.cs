@@ -77,6 +77,14 @@ namespace ShoppingList.Controllers
             return View(listDetailsViewModel);
         }
 
+        [HttpPost]
+        public IActionResult SaveList(List<string> itemList)
+        {
+
+            
+            return View();
+        }
+
         public IActionResult GoShopping(int ListId) 
         {
             return View();

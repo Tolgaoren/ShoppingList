@@ -1,2 +1,43 @@
 ﻿@model ListDetailsViewModel
 
+<label for="searchItem" class="form-label">Add item</label>
+<input class="form-control" list="items" id="searchItem" placeholder="Type to search...">
+<datalist id="items">
+    @foreach (var i in Model.AllItems)
+    {
+        <option value="@i.ItemName">@i.ItemName</option>
+    }
+</datalist>
+<button id="addItem">Add Item</button>
+
+
+<ul id="itemList"></ul>
+<button id="save">Save</button>
+
+
+@section Scripts {
+
+<script>
+    $(document).ready(function(){
+        var itemList = [];
+        
+        $("#addItem").click(function(){
+            var selectedItem = $("#searchItem").val();
+            itemList.push(selectedItem);
+            $("#itemList").append("<li>" + selectedItem + "</li>");
+            $("#searchItem").val('');
+        });
+
+        $("#save").click(function(){
+            $.ajax({
+                url: '/List/SaveList',
+                type: 'POST',
+                data: { 'itemList': itemList },
+                success: function(){
+                    alert("Items saved successfully!");
+                }
+            });
+        });
+    });
+</script>
+}
