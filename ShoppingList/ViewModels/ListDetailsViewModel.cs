@@ -4,8 +4,8 @@ namespace Shopping.ViewModels
 {
     public class ListDetailsViewModel
     {
-        public int ListId {  get; set; }
-        
+        public ShoppingLists ListDetails { get; set; }
+
         public List<ListItems> Items { get; set; }
 
         public List<Items> AllItems { get; set; }

@@ -1,5 +1,6 @@
 ﻿@model ListDetailsViewModel
 
+<h2>@Model.ListDetails.ListName</h2>
 <label for="searchItem" class="form-label">Add item</label>
 <input class="form-control" list="items" id="searchItem" placeholder="Type to search...">
 <datalist id="items">
@@ -44,7 +45,7 @@
             $.ajax({
                 url: '/List/SaveList',
                 type: 'POST',
-                    data: { 'itemIds': itemIds, 'listId': @Model.ListId },
+                    data: { 'itemIds': itemIds, 'listId': @Model.ListDetails.ListId },
                 success: function () {
                     alert("Items saved successfully!");
                 }

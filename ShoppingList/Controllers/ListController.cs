@@ -16,6 +16,15 @@ namespace Shopping.Controllers
 
         public IActionResult ListDetails(int id)
         {
+            // List Details 
+            var listDetails = dbContext.ShoppingLists.FirstOrDefault(a => a.ListId == id);
+            ShoppingLists shoppingList = new ShoppingLists()
+            {
+                ListId = listDetails.ListId,
+                ListName = listDetails.ListName,
+                UserId = listDetails.UserId
+            };
+
             // List Items
             var resultList = dbContext.ListItems.Where(a => a.ListId == id).ToList();
             List<ListItems> Items = new List<ListItems>();
@@ -70,7 +79,7 @@ namespace Shopping.Controllers
 
             ListDetailsViewModel listDetailsViewModel = new ListDetailsViewModel()
             {
-                ListId = id,
+                ListDetails = shoppingList,
                 Items = Items,
                 AllItems = allItems,
                 AllCategories = allCategories
@@ -100,9 +109,60 @@ namespace Shopping.Controllers
             return RedirectToAction("ListDetails", "List", listId);
         }
 
-        public IActionResult GoShopping(int ListId)
+        public IActionResult GoShopping(int id)
         {
-            return View();
+            var listDetails = dbContext.ShoppingLists.FirstOrDefault(a => a.ListId == id);
+            ShoppingLists shoppingList = new ShoppingLists() 
+            {
+                ListId = listDetails.ListId,
+                ListName = listDetails.ListName,
+                UserId = listDetails.UserId
+            };
+
+            var resultList = dbContext.ListItems.Where(a => a.ListId == id).ToList();
+            List<int> itemIds = new List<int>();
+            if (resultList != null)
+            {
+                foreach (var i in resultList)
+                {
+                    itemIds.Add((int)i.ItemId);
+                }
+            }
+            var itemsResult = dbContext.Items.Where(a => itemIds.Contains(a.ItemId)).ToList();
+            List<Items> items = new List<Items>();
+            if (itemsResult != null)
+            {
+                foreach (var i in itemsResult)
+                {
+                    Items item = new Items() 
+                    {
+                        ItemId = i.ItemId,
+                        ItemName = i.ItemName
+                    };   
+                    items.Add(item);
+                }
+            }
+
+            GoShoppingViewModel viewModel = new GoShoppingViewModel()
+            {
+                Items = items,
+                ListDetails = shoppingList
+            };
+            
+            return View(viewModel);
         }
+
+        [HttpPost]
+        public IActionResult ShoppingDone(int listId, List<int> selectedItems) 
+        {
+            var listItems = dbContext.ListItems.Where(a => a.ListId == listId &&  selectedItems.Contains((int)a.ItemId));
+
+            dbContext.ListItems.RemoveRange(listItems);
+            dbContext.SaveChanges();
+        
+            return RedirectToAction("Index","Home"); 
+        }
+
+
     }
 }
