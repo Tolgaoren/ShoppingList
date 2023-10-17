@@ -9,7 +9,10 @@
     }
 </datalist>
 <button id="addItem">Add Item</button>
-
+@foreach (var i in Model.Items)
+{
+    <li>@Model.AllItems.Find(a => a.ItemId == @i.ItemId).ItemName</li>
+}
 
 <ul id="itemList"></ul>
 <button id="save">Save</button>
@@ -18,26 +21,31 @@
 @section Scripts {
 
 <script>
-    $(document).ready(function(){
-        var itemList = [];
-        $("#addItem").click(function(){
+    $(document).ready(function () {
+        var itemIds = [];
+        $("#addItem").click(function () {
             var selectedItem = $("#searchItem").val();
-            itemList.push(selectedItem);
-            $("#itemList").append("<li>" + selectedItem + "</li>");
+            var allItems = [];
+    @foreach (var i in Model.AllItems)
+    {
+        @:allItems.push({ "ItemId": @i.ItemId, "ItemName": "@i.ItemName" });
+    }
+            for (var i = 0; i < allItems.length; i++) {
+                if (selectedItem == allItems[i].ItemName) {
+                    itemIds.push(allItems[i].ItemId);
+                    $("#itemList").append("<li>" + selectedItem + "</li>");
+                    break;
+                }
+            }
             $("#searchItem").val('');
         });
 
-        $("#save").click(function(){
-        var allItems = [];
-        @foreach (var i in Model.AllItems)
-        {
-            @:allItems.push({ "ItemId": @i.ItemId, "ItemName": "@i.ItemName" });
-        }
+        $("#save").click(function () {
             $.ajax({
                 url: '/List/SaveList',
                 type: 'POST',
-                data: { 'itemList': itemList, 'allItems': allItems },
-                success: function(){
+                    data: { 'itemIds': itemIds, 'listId': @Model.ListId },
+                success: function () {
                     alert("Items saved successfully!");
                 }
             });

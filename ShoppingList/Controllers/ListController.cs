@@ -14,10 +14,10 @@ namespace Shopping.Controllers
             dbContext = new ShoppingDbContext();
         }
 
-        public IActionResult ListDetails(int ListId)
+        public IActionResult ListDetails(int id)
         {
             // List Items
-            var resultList = dbContext.ListItems.Where(a => a.ListId == ListId).ToList();
+            var resultList = dbContext.ListItems.Where(a => a.ListId == id).ToList();
             List<ListItems> Items = new List<ListItems>();
             if (resultList != null)
             {
@@ -27,10 +27,11 @@ namespace Shopping.Controllers
                     {
                         ListId = item.ListId,
                         ListItemId = item.ListItemId,
-                        ItemId = item.ListItemId,
+                        ItemId = item.ItemId,
                         Description = item.Description,
                         IsBought = item.IsBought
                     };
+                    Items.Add(listItems);
                 }
             }
 
@@ -69,6 +70,7 @@ namespace Shopping.Controllers
 
             ListDetailsViewModel listDetailsViewModel = new ListDetailsViewModel()
             {
+                ListId = id,
                 Items = Items,
                 AllItems = allItems,
                 AllCategories = allCategories
@@ -78,15 +80,24 @@ namespace Shopping.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveList(List<string> itemList, List<Items> allItems)
+        public IActionResult SaveList(List<int> itemIds, int listId)
         {
-            if (itemList != null || allItems != null)
-            {
-                ShoppingList shoppingList = new ShoppingList() { };
-
+            if (itemIds != null)
+            {   
+                foreach (var i in itemIds)
+                {
+                    ListItem listItem = new ListItem()
+                    {
+                        ListId = listId,
+                        ItemId = i,
+                        IsBought = false
+                    };
+                    dbContext.ListItems.Add(listItem);
+                }
+                dbContext.SaveChanges();
             }
 
-            return View();
+            return RedirectToAction("ListDetails", "List", listId);
         }
 
         public IActionResult GoShopping(int ListId)
