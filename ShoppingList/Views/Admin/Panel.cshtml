@@ -1,0 +1,75 @@
+﻿@model PanelViewModel
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Item ekle</h2>
+        <form action="AddItem" method="post">
+            <label for="itemName">Ürün adı: </label>
+            <input type="text" name="itemName" />
+            <br />
+            <label for="categoryId">Kategorisi: </label>
+            <input type="number" name="categoryId" />
+            <button type="submit">Ekle</button>
+        </form>
+
+    </div>
+    <div class="col-md-4">
+        <h2>Kategori Ekle</h2>
+        <form action="AddCategory" method="post">
+            <label for="categoryName">Kategori Adı: </label>
+            <input type="text" name="categoryName" />
+            <button type="submit">Ekle</button>
+        </form>
+
+    </div>
+</div>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Kategori Id</th>
+            <th scope="col">Kategori Adı</th>
+            <th scope="col">İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.Categories)
+        {
+            <tr>
+                <td>@c.CategoryId</td>
+                <td>@c.CategoryName</td>
+                <td>
+                    <form action="@Url.Action("DeleteCategory", "Home", new { id = c.CategoryId })" method="post">
+                        <input type="submit" value="Sil" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Item Id</th>
+            <th scope="col">Item Adı</th>
+            <th scope="col">İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model.Items)
+        {
+            <tr>
+                <td>@i.ItemId</td>
+                <td>@i.ItemName</td>
+                <td>
+                    <form action="@Url.Action("DeleteItem", "Home", new { id = i.ItemId })" method="post">
+                        <input type="submit" value="Sil" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
