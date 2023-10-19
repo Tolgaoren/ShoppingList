@@ -28,6 +28,21 @@
                     </ul>
                 </div>
             </div>
+            @{
+                var userClaims = User.Claims;
+                var userEmail = userClaims.FirstOrDefault(u => u.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
+            }
+
+            @if (!string.IsNullOrEmpty(userEmail))
+            {
+                <div class="dropdown">
+                    <button class="dropbtn">@userEmail</button>
+                    <div class="dropdown-content">
+                        <a href="@Url.Action("Logout", "Account")">Çıkış Yap</a>
+                    </div>
+                </div>
+            }
+
         </nav>
     </header>
     <div class="container">

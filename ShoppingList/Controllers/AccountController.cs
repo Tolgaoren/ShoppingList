@@ -141,5 +141,12 @@ namespace Shopping.Controllers
             }
             return Task.CompletedTask;
         }
+
+        public IActionResult Logout()
+        {
+            var authProperties = new AuthenticationProperties();
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme, authProperties);
+            return RedirectToAction("Login","Account");
+        }
     }
 }
